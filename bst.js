@@ -56,7 +56,7 @@ class BST{
     setX(root){
         if (root == null) return;
         this.setX(root.mLeft);
-        root.mX = 3 * RADIUS * this.mScalarX + this.mOffsetX;
+        root.mX = 5 * RADIUS * this.mScalarX + this.mOffsetX;
         ++this.mScalarX;
         this.setX(root.mRight);
     }
@@ -65,7 +65,7 @@ class BST{
     setY(root){
         if (root == null) return;
         this.setY(root.mLeft);
-        root.mY = root.mDepth * 3 * RADIUS + this.mOffsetY;
+        root.mY = root.mDepth * 5 * RADIUS + this.mOffsetY;
         this.setY(root.mRight);
     }
 }
@@ -180,31 +180,47 @@ function recomputeCanvas(root){
     const left = recomputeCanvas(root.mLeft);
     const right = recomputeCanvas(root.mRight);
 
-    const minX = Math.min(root.mX, left.minX, right.minX);
-    const maxX = Math.max(root.mX, left.maxX, right.maxX);
-    const minY = Math.min(root.mY, left.minY, right.minY);
-    const maxY = Math.max(root.mY, left.maxY, right.maxY);
+    const minX = Math.min(root.mX, left.minX, right.minX) - 50;
+    const maxX = Math.max(root.mX, left.maxX, right.maxX) + 50;
+    const minY = Math.min(root.mY, left.minY, right.minY) - 50;
+    const maxY = Math.max(root.mY, left.maxY, right.maxY) + 50;
 
     return { minX, maxX, minY, maxY };
 
 
 }
 
+// prevent negative coordinate values
+function shiftCoordinates(root, dx, dy) {
+    if (!root) return;
+    root.mX += dx;
+    root.mY += dy;
+    shiftCoordinates(root.mLeft, dx, dy);
+    shiftCoordinates(root.mRight, dx, dy);
+}
+
 // main function
-async function driver(){
-    canvas = document.getElementById('canvas');
+
+async function driver() {
+    const canvas = document.getElementById('canvas');
+    canvas.innerHTML = ''; 
     const bst = await loadTree(canvas);
     console.log(bst);
 
-    // add the nodes to the canvas
+    const bounds = recomputeCanvas(bst.mRoot);
+    const padding = 100; 
+
+    shiftCoordinates(bst.mRoot, -bounds.minX + padding, -bounds.minY + padding);
+
+    const shiftedBounds = recomputeCanvas(bst.mRoot);
+
+    canvas.setAttribute('width', shiftedBounds.maxX - shiftedBounds.minX + padding * 2);
+    canvas.setAttribute('height', shiftedBounds.maxY - shiftedBounds.minY + padding * 2);
+
     drawLines(bst.mRoot, canvas);
     populateCanvas(bst.mRoot, canvas);
-    const bounds = recomputeCanvas(bst.mRoot);
-
-    const padding = 50; 
-    canvas.setAttribute('width', bounds.maxX - bounds.minX + padding*2);
-    canvas.setAttribute('height', bounds.maxY - bounds.minY + padding*2);
 }
+
 
 // call main function
 driver();
