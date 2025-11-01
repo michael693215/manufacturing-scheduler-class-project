@@ -54,7 +54,7 @@ void getInput(std::string prompt, int& answer, int min, int max){
 // function that inserts 'size' number of random elements into the heap
 void populateHeapRandom(MQueue& heap){
     int strlen = 5; // arbitrary length of the 'name' string
-    int size = 50;  // number of insertions to be made
+    int size = 15;  // number of insertions to be made
     // order parameters are created with Random 
     Random str(97, 122); // for ascii
     Random importance(MINONE, MAX100);
