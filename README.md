@@ -10,4 +10,5 @@ Additionally, a web-based visualization script can be found in index.html and bs
 2. Open the index.html file in your browser. This will call bst.js, which reads the data.json file created in main.cpp. Alternatively, use the following link to check out the heap I already compiled:
    https://michael693215.github.io/manufacturing-scheduler-class-project/
 3. Each node in the visualization will display the name as a tooltip if you hover your mouse over the yellow portion of it. The priority value in the center of the node is a separate html entity, so hovering on the number doesn't do anything.
+
    ![hippo](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2wzMG4zcW84anJzYnlnYXhta3JwZ25uZngxZHRobXVjbGtvZ2ZhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WvrGPAWNd2P6ZFnfqo/giphy.gif) 
